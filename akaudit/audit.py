@@ -20,7 +20,12 @@ class Auditer():
         config = SSHConfig()
         config.parse(open('/etc/ssh/sshd_config'))
 
-        authorized_keys_file = config.lookup('')['authorizedkeysfile']
+        # TODO: check .ssh/authorized_keys2
+
+        if 'authorizedkeysfile' in config.lookup(''):
+            authorized_keys_file = config.lookup('')['authorizedkeysfile']
+        else:
+            authorized_keys_file = '.ssh/authorized_keys'
 
         logging.debug(str('sshd accepts keys in ' + authorized_keys_file + ' for users.'))
 
