@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 import os.path
 import sys
 import pwd, grp
@@ -46,7 +48,10 @@ class Auditer():
                     for line in lines:
                         logging.debug(Fore.YELLOW + str(line.split()))
                         public_key = line.split()[1]
-                        label = line.split()[2]
+                        if len(line.split()) > 2:
+                            label = line.split()[2]
+                        else:
+                            label = '<no label>'
                         print(label, ':', public_key[0:12] + '...' + public_key[-19:])
                         if args.interactive:
                             if yesno('==> Remove key? '):
