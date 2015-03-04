@@ -20,5 +20,5 @@ Audit who has SSH access to your user homes via authorized_keys.
 import os
 import sys
 
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 __description__ = 'Audit who has SSH access to your user homes via authorized_keys.'
