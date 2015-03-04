@@ -52,7 +52,7 @@ class Auditer():
                             label = line.split()[2]
                         else:
                             label = '<no label>'
-                        print(label, ':', public_key[0:12] + '...' + public_key[-19:])
+                        print(ak_path, ':', label, ':', public_key[0:12] + '...' + public_key[-19:])
                         if args.interactive:
                             if yesno('==> Remove key? '):
                                 remove_public_key(ak_path, public_key)
