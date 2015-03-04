@@ -16,6 +16,7 @@ from __future__ import print_function
 
 import os.path
 import sys
+import platform
 import pwd, grp
 import logging
 import akaudit.keytools
@@ -39,15 +40,20 @@ class Auditer():
 
         invalid_shells = ['/bin/false', '/sbin/nologin', '/usr/bin/nologin']
 
-        config = SSHConfig()
-        config.parse(open('/etc/ssh/sshd_config'))
-
         # TODO: check .ssh/authorized_keys2
-
-        if 'authorizedkeysfile' in config.lookup(''):
-            authorized_keys_file = config.lookup('')['authorizedkeysfile']
-        else:
+        
+        if platform.system() == 'Darwin':
             authorized_keys_file = '.ssh/authorized_keys'
+        elif os.path.isfile('/etc/ssh/sshd_config'):
+            sshd_config = '/etc/ssh/sshd_config'
+            config = SSHConfig()
+            config.parse(sshd_config)
+            if 'authorizedkeysfile' in config.lookup(''):
+                authorized_keys_file = config.lookup('')['authorizedkeysfile']
+            else:
+                authorized_keys_file = '.ssh/authorized_keys'
+        else:
+            raise Exception('Cannot find a local sshd_config in commonly installed paths.')
 
         logging.debug(str('sshd accepts keys in ' + authorized_keys_file + ' for users.'))
 
