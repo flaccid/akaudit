@@ -1,3 +1,5 @@
+from six.moves import input
+
 def yesno(prompt='? '):
 	# raw_input returns the empty string for "enter"
 	yes = set(['yes','y', 'ye', ''])
