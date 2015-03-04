@@ -2,11 +2,17 @@ import os.path
 import sys
 import pwd, grp
 import logging
+import akaudit.keytools
 from paramiko import SSHClient, SSHConfig
 from colorama import Fore, Back, Style
+from akaudit.userinput import yesno
+from akaudit.keytools import remove_public_key
 
 class Auditer():
     def run_audit(self, args):
+
+        sys.stdout.write(Fore.RESET + Back.RESET + Style.RESET_ALL)
+
         # assuming loglevel is bound to the string value obtained from the
         # command line argument. Convert to upper case to allow the user to
         # specify --log=DEBUG or --log=debug
@@ -39,5 +45,16 @@ class Auditer():
                     lines = [line.strip() for line in open(ak_path) if line.strip()]
                     for line in lines:
                         logging.debug(Fore.YELLOW + str(line.split()))
+                        public_key = line.split()[1]
+                        label = line.split()[2]
+                        print(label, ':', public_key[0:12] + '...' + public_key[-19:])
+                        if args.interactive:
+                            if yesno('==> Remove key? '):
+                                remove_public_key(ak_path, public_key)
+                                logging.info(Fore.GREEN + "Key '" + label + "' removed.")
+                            else:
+                                logging.debug(Fore.GREEN + "Key removal of '" + label + "' skipped.")
+                            sys.stdout.write(Fore.RESET + Back.RESET + Style.RESET_ALL)
+
                         sys.stdout.write(Fore.RESET + Back.RESET + Style.RESET_ALL)
         sys.exit()
