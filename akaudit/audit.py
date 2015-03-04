@@ -41,13 +41,12 @@ class Auditer():
         invalid_shells = ['/bin/false', '/sbin/nologin', '/usr/bin/nologin']
 
         # TODO: check .ssh/authorized_keys2
-        
+
         if platform.system() == 'Darwin':
             authorized_keys_file = '.ssh/authorized_keys'
         elif os.path.isfile('/etc/ssh/sshd_config'):
-            sshd_config = '/etc/ssh/sshd_config'
             config = SSHConfig()
-            config.parse(sshd_config)
+            config.parse(open('/etc/ssh/sshd_config'))
             if 'authorizedkeysfile' in config.lookup(''):
                 authorized_keys_file = config.lookup('')['authorizedkeysfile']
             else:
