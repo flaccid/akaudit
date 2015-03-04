@@ -7,7 +7,9 @@ from akaudit.audit import Auditer
 def main(argv = sys.argv, log = sys.stderr):
 	parser = argparse.ArgumentParser(description='Audit who has access to your homes.', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 	parser.add_argument('-l', '--log', default='info', help='Log level')
+	parser.add_argument('-i', '--interactive', help='Interactive mode (prompts asking if to delete each key)', action="store_true")
 	args = parser.parse_args()
+
 	auditer = Auditer()
 	auditer.run_audit(args)
 
