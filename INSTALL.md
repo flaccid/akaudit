@@ -1,6 +1,14 @@
-$ python setup.py sdist
+# akaudit Installation
+
+## PIP
+
+	# pip install akaudit
+
+## From Source
+
+	$ python setup.py sdist
     
-The above commands will install setup all the necessary files for installation in the `dist/` folder.
+The above command will install setup all the necessary files for installation in the `dist/` folder, then:
 
 Linux/OS X:
 
