@@ -36,8 +36,7 @@ class Auditer():
                 if os.path.isfile(ak_path):
                     logging.info(str(p[0] + ' has authorized public keys!'))
                     logging.debug(str('user: ' + p[0] + ', shell: ' + p[6] + ', home: ' +  p[5]))
-                    lines = [line.strip() for line in open(ak_path)]
-                    lines.remove('')
+                    lines = [line.strip() for line in open(ak_path) if line.strip()]
                     for line in lines:
                         logging.debug(Fore.YELLOW + str(line.split()))
                         sys.stdout.write(Fore.RESET + Back.RESET + Style.RESET_ALL)
