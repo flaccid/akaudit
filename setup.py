@@ -30,5 +30,5 @@ setup(
         url = "https://github.com/flaccid/akaudit",
         scripts=['bin/akaudit'],
         packages = find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
-        install_requires = ['paramiko', 'colorama'] + opt_requires,
+        install_requires = ['paramiko', 'colorama', 'six'] + opt_requires,
         )
