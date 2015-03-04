@@ -9,3 +9,7 @@ Linux/OS X:
 As paramiko depends on ecdsa, you will need to install this if not already on your system:
 
     # pip install ecdsa
+
+You will likely need to install gcc and Python development files too:
+
+	# apt-get install gcc python-dev
