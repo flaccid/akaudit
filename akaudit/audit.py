@@ -33,7 +33,6 @@ init(autoreset=True)
 
 class Auditer():
     def run_audit(self, args):
-
         sys.stdout.write(Fore.RESET + Back.RESET + Style.RESET_ALL)
 
         # assuming loglevel is bound to the string value obtained from the
@@ -70,8 +69,6 @@ class Auditer():
                 ak_path = os.path.join(home_dir, authorized_keys_file)
                 if os.path.isfile(ak_path) and os.path.getsize(ak_path) > 0:
                     logging.info(str('interrogating user, ' + p[0]))
-                    if not logging.getLogger().isEnabledFor(logging.DEBUG):
-                        print()
                     logging.debug(str('user: ' + p[0] + ', shell: ' + p[6] + ', home: ' +  p[5]))
 
                     lines = [line.strip() for line in open(ak_path) if line.strip()]
@@ -81,7 +78,7 @@ class Auditer():
                         logging.debug(str('processing line: ' + line))
                         # return immediately when line is prefixed with # (a comment)
                         if line.startswith('#'):
-                            logging.debug('Skipping line with comment')
+                            logging.debug('skipping line with comment')
                         else:
                             try:
                                 public_key = PublicKey(line)
@@ -97,8 +94,8 @@ class Auditer():
                                 logging.debug("  - options = %r" % public_key.options)
                                 key_material = base64.b64decode(public_key.blob.decode("utf-8"))
                                 logging.debug("  - key_material = %r" % key_material)
-                                
-                                print('found ', ak_path, ':', label, ':', key_material[0:12] + '...' + key_material[-19:])
+
+                                logging.info('[key found] ' + ak_path + ':' + label + ':' + key_material[0:12] + '...' + key_material[-19:])
                             except ValueError as e:
                                 logging.debug("* failure = %r" % e)
 
