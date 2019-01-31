@@ -35,15 +35,16 @@ if (sys.version_info[:2][0] < 3 and sys.version_info[:2][1] < 7) or (sys.version
     opt_requires.append('argparse')
 
 setup(
-    name = "akaudit",
-    version = akaudit.__version__,
-    author = "Chris Fordham",
-    author_email = "chris@fordham-nagy.id.au",
-    description = akaudit.__description__,
-    license = "Apache 2.0",
-    url = "https://github.com/flaccid/akaudit",
-    download_url = 'https://github.com/flaccid/akaudit/tarball/v' + akaudit.__version__,
+    name="akaudit",
+    version=akaudit.__version__,
+    author="Chris Fordham",
+    author_email="chris@fordham-nagy.id.au",
+    description=akaudit.__description__,
+    license="Apache 2.0",
+    url="https://github.com/flaccid/akaudit",
+    download_url='https://github.com/flaccid/akaudit/tarball/v' + akaudit.__version__,
     scripts=['bin/akaudit'],
-    packages = find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
-    install_requires = ['paramiko', 'colorama', 'six'] + opt_requires,
+    packages=find_packages(
+        exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
+    install_requires=['paramiko', 'colorama', 'six'] + opt_requires,
 )

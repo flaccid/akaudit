@@ -17,7 +17,8 @@ from __future__ import print_function
 import os.path
 import sys
 import platform
-import pwd, grp
+import pwd
+import grp
 import logging
 import base64
 import akaudit.authorized_keys
@@ -31,6 +32,7 @@ from akaudit.keytools import remove_public_key
 # https://pypi.python.org/pypi/colorama
 init(autoreset=True)
 
+
 class Auditer():
     def run_audit(self, args):
         sys.stdout.write(Fore.RESET + Back.RESET + Style.RESET_ALL)
@@ -41,7 +43,8 @@ class Auditer():
         numeric_level = getattr(logging, args.log.upper(), None)
         if not isinstance(numeric_level, int):
             raise ValueError('Invalid log level: %s' % loglevel)
-        logging.basicConfig(format='%(levelname)s: %(message)s', level=numeric_level)
+        logging.basicConfig(
+            format='%(levelname)s: %(message)s', level=numeric_level)
 
         invalid_shells = ['/bin/false', '/sbin/nologin', '/usr/bin/nologin']
 
@@ -57,9 +60,11 @@ class Auditer():
             else:
                 authorized_keys_file = '.ssh/authorized_keys'
         else:
-            raise Exception('Cannot find a local sshd_config in commonly installed paths')
+            raise Exception(
+                'Cannot find a local sshd_config in commonly installed paths')
 
-        logging.debug(str('sshd accepts keys in ' + authorized_keys_file + ' for users'))
+        logging.debug(str('sshd accepts keys in ' +
+                          authorized_keys_file + ' for users'))
 
         for p in pwd.getpwall():
             # mega debug
@@ -69,9 +74,11 @@ class Auditer():
                 ak_path = os.path.join(home_dir, authorized_keys_file)
                 if os.path.isfile(ak_path) and os.path.getsize(ak_path) > 0:
                     logging.info(str('interrogating user, ' + p[0]))
-                    logging.debug(str('user: ' + p[0] + ', shell: ' + p[6] + ', home: ' +  p[5]))
+                    logging.debug(
+                        str('user: ' + p[0] + ', shell: ' + p[6] + ', home: ' + p[5]))
 
-                    lines = [line.strip() for line in open(ak_path) if line.strip()]
+                    lines = [line.strip()
+                             for line in open(ak_path) if line.strip()]
 
                     # iterate over each line in the authorized keys file
                     for line in lines:
@@ -88,13 +95,20 @@ class Auditer():
                                     label = public_key.comment
 
                                 logging.debug("* key = %r" % public_key)
-                                logging.debug("  - prefix = %r" % public_key.prefix)
-                                logging.debug("  - algo = %r" % public_key.algo)
-                                logging.debug("  - comment = %r" % public_key.comment)
-                                logging.debug("  - options = %r" % public_key.options)
-                                key_material = base64.b64decode(public_key.blob.decode("utf-8"))
-                                logging.debug("  - key_material = %r" % key_material)
-                                logging.info('[key found] ' + ak_path + ':' + label + ':' + str(key_material[0:12]) + '...' + str(key_material[-19:]))
+                                logging.debug("  - prefix = %r" %
+                                              public_key.prefix)
+                                logging.debug("  - algo = %r" %
+                                              public_key.algo)
+                                logging.debug("  - comment = %r" %
+                                              public_key.comment)
+                                logging.debug("  - options = %r" %
+                                              public_key.options)
+                                key_material = base64.b64decode(
+                                    public_key.blob.decode("utf-8"))
+                                logging.debug(
+                                    "  - key_material = %r" % key_material)
+                                logging.info('[key found] ' + ak_path + ':' + label + ':' + str(
+                                    key_material[0:12]) + '...' + str(key_material[-19:]))
                             except ValueError as e:
                                 logging.debug("* failure = %r" % e)
 
@@ -102,9 +116,11 @@ class Auditer():
                             if args.interactive:
                                 if yesno('==> Remove key (y/n) ? '):
                                     remove_public_key(ak_path, key_material)
-                                    logging.info(Fore.GREEN + "Key '" + label + "' removed.")
+                                    logging.info(
+                                        Fore.GREEN + "Key '" + label + "' removed.")
                                 else:
-                                    logging.debug(Fore.GREEN + "Key removal of '" + label + "' skipped.")
+                                    logging.debug(
+                                        Fore.GREEN + "Key removal of '" + label + "' skipped.")
                                     if not logging.getLogger().isEnabledFor(logging.DEBUG):
                                         print()
 

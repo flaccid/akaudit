@@ -19,15 +19,20 @@ import argparse
 import akaudit
 from akaudit.audit import Auditer
 
-def main(argv = sys.argv, log = sys.stderr):
-	parser = argparse.ArgumentParser(description=akaudit.__description__, formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-	parser.add_argument('-l', '--log', default='info', help='log level')
-	parser.add_argument('-i', '--interactive', help='interactive mode (prompts asking if to delete each key)', action="store_true")
-	parser.add_argument('-v', '--version', action="version", version='%(prog)s ' + akaudit.__version__)
-	args = parser.parse_args()
 
-	auditer = Auditer()
-	auditer.run_audit(args)
+def main(argv=sys.argv, log=sys.stderr):
+    parser = argparse.ArgumentParser(
+        description=akaudit.__description__, formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument('-l', '--log', default='info', help='log level')
+    parser.add_argument('-i', '--interactive',
+                        help='interactive mode (prompts asking if to delete each key)', action="store_true")
+    parser.add_argument('-v', '--version', action="version",
+                        version='%(prog)s ' + akaudit.__version__)
+    args = parser.parse_args()
+
+    auditer = Auditer()
+    auditer.run_audit(args)
+
 
 if __name__ == "__main__":
     main(sys.argv[1:])

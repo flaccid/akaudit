@@ -24,6 +24,7 @@ import base64
 import hashlib
 import struct
 
+
 class PublicKeyOptions(list):
     def __str__(self):
         o = []
@@ -84,6 +85,7 @@ class PublicKeyOptions(list):
                 values.append(current)
 
         return klass(zip(keys, values))
+
 
 class PublicKey(object):
     def __init__(self, line=None, strict_algo=True, host_prefix=False):
@@ -184,11 +186,12 @@ class PublicKey(object):
 
         prefix = " ".join(tokens[0:algo_pos])
         algo = tokens[algo_pos]
-        blob = tokens[algo_pos+1]
+        blob = tokens[algo_pos + 1]
         blob = base64.b64encode(blob.encode("utf-8"))
-        comment = " ".join(tokens[algo_pos+2:])
+        comment = " ".join(tokens[algo_pos + 2:])
 
         return prefix, algo, blob, comment
+
 
 if __name__ == "__main__":
     import os
