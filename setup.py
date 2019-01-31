@@ -40,6 +40,8 @@ setup(
     author="Chris Fordham",
     author_email="chris@fordham-nagy.id.au",
     description=akaudit.__description__,
+    long_description=akaudit.__long_description__,
+    long_description_content_type=akaudit.__long_description_content_type__,
     license="Apache 2.0",
     url="https://github.com/flaccid/akaudit",
     download_url='https://github.com/flaccid/akaudit/tarball/v' + akaudit.__version__,

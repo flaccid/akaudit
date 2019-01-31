@@ -22,3 +22,5 @@ import sys
 
 __version__ = '0.2.1'
 __description__ = 'Audit who has SSH access to your user homes via authorized_keys.'
+__long_description__ = 'Audit who has SSH access to your user homes via authorized_keys.'
+__long_description_content_type__ = 'text/x-rst'
