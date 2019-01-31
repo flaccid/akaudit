@@ -94,8 +94,7 @@ class Auditer():
                                 logging.debug("  - options = %r" % public_key.options)
                                 key_material = base64.b64decode(public_key.blob.decode("utf-8"))
                                 logging.debug("  - key_material = %r" % key_material)
-
-                                logging.info('[key found] ' + ak_path + ':' + label + ':' + key_material[0:12] + '...' + key_material[-19:])
+                                logging.info('[key found] ' + ak_path + ':' + label + ':' + str(key_material[0:12]) + '...' + str(key_material[-19:]))
                             except ValueError as e:
                                 logging.debug("* failure = %r" % e)
 
