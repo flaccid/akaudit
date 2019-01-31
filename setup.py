@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # Copyright 2011-2019 Chris Fordham
 #
@@ -43,7 +43,7 @@ setup(
     license="Apache 2.0",
     url="https://github.com/flaccid/akaudit",
     download_url='https://github.com/flaccid/akaudit/tarball/v' + akaudit.__version__,
-    scripts=['bin/akaudit'],
+    scripts=['scripts/akaudit'],
     packages=find_packages(
         exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
     install_requires=['paramiko', 'colorama', 'six'] + opt_requires,
